@@ -1,0 +1,135 @@
+1. Exiba os nomes dos clientes com todas as letras em maiúsculas.{
+
+SELECT UPPER (cliente_nome)
+FROM cliente;
+
+}
+
+2. Exiba os nomes dos clientes formatados com apenas a primeira letra maiúscula. {
+
+SELECT INITCAP (cliente_nome) AS Nome_maiusculo
+FROM cliente;
+
+}
+
+3. Mostre as três primeiras letras do nome de cada cliente. {
+
+SELECT SUBSTR (cliente_nome, 1, 3) AS Iniciais
+FROM cliente;
+
+}
+
+4. Exiba o número de caracteres do nome de cada cliente. {
+
+SELECT cliente_nome, LENGTH (cliente_nome) AS Numero_caracteres
+FROM cliente;
+
+}
+
+5. Apresente o saldo de todas as contas, arredondado para o inteiro mais próximo.{
+
+SELECT ROUND (saldo, 0) 
+FROM conta;
+
+}
+
+6. Exiba o saldo truncado, sem casas decimais.{
+
+SELECT TRUNC (saldo, 0)
+FROM conta;
+
+}
+
+7. Mostre o resto da divisão do saldo da conta por 1000.{
+
+SELECT MOD (saldo, 1000) 
+FROM conta;
+
+}
+
+8. Exiba a data atual do servidor do banco.{
+
+SELECT SYSDATE
+FROM DUAL;
+
+}
+
+9. Adicione 30 dias à data atual e exiba como "Data de vencimento simulada".{
+
+SELECT SYSDATE + 30 AS "Data de vencimento simulada"
+FROM DUAL;
+
+}
+
+10. Exiba o número de dias entre a data de abertura da conta e a data atual.{
+
+SELECT TRUNC(SYSDATE - data_abertura) 
+FROM conta;
+
+}
+
+11. Apresente o saldo de cada conta formatado como moeda local.{
+
+SELECT TO_CHAR(saldo, 'L9G999G990D00', 'NLS_CURRENCY = ''R$'' NLS_NUMERIC_CHARACTERS = '',.''') AS Saldo_BRL
+FROM conta;
+
+}
+
+12. Converta a data de abertura da conta para o formato 'dd/mm/yyyy'.{
+
+SELECT TO_CHAR(data_abertura, 'DD/MM/YYYY') AS Data_formatada
+FROM conta;
+
+}
+
+13. Exiba o saldo da conta e substitua valores nulos por 0.{
+
+SELECT NVL(saldo, 0)
+FROM conta;
+
+}
+
+14. Exiba os nomes dos clientes e substitua valores nulos na cidade por 'Sem cidade'.{
+
+SELECT cliente_nome, NVL(cidade, 'Sem cidade') 
+FROM cliente;
+
+}
+
+15. Classifique os clientes em grupos com base em sua cidade:{
+
+SELECT cliente_nome, cidade,
+CASE cidade
+WHEN 'Niterói' THEN 'Região Metropolitana'
+WHEN 'Resende' THEN 'Interior'
+ELSE 'Outra Região'
+END AS Grupo_cidade
+FROM cliente;
+
+}
+
+16. Exiba o nome de cada cliente, o número da conta e o saldo correspondente.{
+
+SELECT c.cliente_nome, ct.conta_numero, ct.saldo
+FROM cliente c
+JOIN conta ct ON c.cliente_cod = ct.cliente_cliente_cod;
+
+}
+
+17. Liste os nomes dos clientes e os nomes das agências onde mantêm conta.{
+
+SELECT c.cliente_nome, a.agencia_nome
+FROM cliente c
+JOIN conta ct ON c.cliente_cod = ct.cliente_cliente_cod
+JOIN agencia a ON ct.agencia_agencia_cod = a.agencia_cod;
+
+}
+
+18. Mostre todas as agências, mesmo aquelas que não possuem clientes vinculados.{
+
+SELECT a.agencia_nome, c.cliente_nome
+FROM agencia a
+LEFT JOIN conta ct ON a.agencia_cod = ct.agencia_agencia_cod
+LEFT JOIN cliente c ON ct.cliente_cliente_cod = c.cliente_cod;
+
+}
